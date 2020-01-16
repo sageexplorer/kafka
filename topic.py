@@ -9,8 +9,8 @@ BROKER_URL = "PLAINTEXT://localhost:9092"
 
 def topic_exists(client, topic_name):
     """Checks if the given topic exists"""
-    topic_metadata = client.list_topics:
-    return topic_metadata.topic.get(topic_name) is not None 
+    topic_metadata = client.list_topics(timeout=5)
+    return topic_metadata.topics.get(topic_name) is not None 
 
 
 def create_topic(client, topic_name):
@@ -25,9 +25,9 @@ def create_topic(client, topic_name):
                  "cleanup.policy": "compact",
                  "compression.type": "lz4",
                  "delete.retention.ms": 100,
-                 "file.delete.delay.ms": 100
-             }
-
+                 "file.delete.delay.ms": 100,
+                }
+            )
         ]
     )
 
@@ -44,7 +44,7 @@ def main():
     """Checks for topic and creates the topic if it does not exist"""
     client = AdminClient({"bootstrap.servers": BROKER_URL})
 
-    topic_name = "sample 2"
+    topic_name = "sample2"
     exists = topic_exists(client, topic_name)
     print(f"Topic {topic_name} exists: {exists}")
 
