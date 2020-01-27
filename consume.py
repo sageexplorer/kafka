@@ -21,13 +21,15 @@ async def consume(topic_name):
     c.subscribe([topic_name])
 
     while True:
-        #
-        # TODO: Write a loop that uses consume to grab 5 messages at a time and has a timeout.
-        #       See: https://docs.confluent.io/current/clients/confluent-kafka-python/index.html?highlight=partition#confluent_kafka.Consumer.consume
-        #
-
-        # TODO: Print something to indicate how many messages you've consumed. Print the key and value of
-        #       any message(s) you consumed
+        messages = c.consume(5, 1.0)
+        for message in messages:
+            if message is None:
+                print("No messages is received by the consumer")
+            elif message.error() is not None:
+                print(f'error from consumer {message.error}')
+            else:
+                print(f'consumed messages {message.key()} : {message.value()}')
+                
 
         # Do not delete this!
         await asyncio.sleep(0.01)
