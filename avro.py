@@ -25,6 +25,7 @@ class ClickEvent:
     schema = parse_schema({
         "type": "record",
         "name": "click",
+        "namespace": "com.udacity.lesson3.exercise2.clicks",
         "fields": [
             {"name": "email", "type": "string"},
             {"name": "timestamp", "type": "string"},
