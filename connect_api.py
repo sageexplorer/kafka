@@ -1,4 +1,4 @@
-```
+```python
 The Kafka Connect API
 In this exercise we're going to make use of the Kafka Connect API.
 
