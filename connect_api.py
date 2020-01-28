@@ -1,3 +1,4 @@
+```
 The Kafka Connect API
 In this exercise we're going to make use of the Kafka Connect API.
 
@@ -51,5 +52,4 @@ Deleting connectors
 Finally, to delete your connector:
 
 curl -X DELETE http://localhost:8083/connectors/first-connector
-
-​
+```
