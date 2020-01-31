@@ -1,6 +1,8 @@
 
 # Please complete the TODO items in the code
 
+# To run this: kafka-console-consumer --bootstrap-server localhost:9092 --topic com.udacity.streams.clickevents
+
 from dataclasses import asdict, dataclass
 import json
 
@@ -25,16 +27,10 @@ popular_uris_topic = app.topic(
 
 @app.agent(clickevents_topic)
 async def clickevent(clickevents):
-    #
-    # TODO: Filter clickevents to only those with a number higher than or
-    #       equal to 100
-    #       See: https://faust.readthedocs.io/en/latest/userguide/streams.html#filter-filter-values-to-omit-from-stream
-    #
-    #async for ...
-        #
-        # TODO: Send the message to the `popular_uris_topic` with a key and value.
-        #
-    pass
+    async for event in clickevents.filter(lambda x: x.number >=600):
+        await clickevents_topic.send(key=event.uri, value=event)
+    
+    
 
 if __name__ == "__main__":
     app.main()
