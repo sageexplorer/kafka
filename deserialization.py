@@ -2,32 +2,17 @@
 
 from dataclasses import asdict, dataclass
 import json
-
 import faust
 
-
-#
-# TODO: Define a ClickEvent Record Class with an email (str), timestamp (str), uri(str)
-#       and number (int)
-#
-#       See: https://docs.python.org/3/library/dataclasses.html
-#       See: https://faust.readthedocs.io/en/latest/userguide/models.html#model-types
-#
 @dataclass 
 class ClickEvent(faust.Record):
     email: str 
     timestamp: str 
     number: int     
         
-        
-    
-    
-
+  
 app = faust.App("exercise2", broker="kafka://localhost:9092")
 
-#
-# TODO: Provide the key (uri) and value type to the clickevent
-#
 clickevents_topic = app.topic(
     "com.udacity.streams.clickevents",
     key_type=str,
