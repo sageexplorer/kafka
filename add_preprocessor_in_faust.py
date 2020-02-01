@@ -5,7 +5,7 @@ import json
 import random
 
 import faust
-
+##kafka-console-consumer --bootstrap-server localhost:9092 --topic com.udacity.streams.clickevents.score
 
 @dataclass
 class ClickEvent(faust.Record):
