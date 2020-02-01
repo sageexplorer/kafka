@@ -15,12 +15,6 @@ class ClickEvent(faust.Record):
     number: int
     score: int = 0
 
-
-#
-# TODO: Define a scoring function for incoming ClickEvents.
-#       It doens't matter _how_ you score the incoming records, just perform
-#       some modification of the `ClickEvent.score` field and return the value
-#
 def add_score(event):
     event.score = random.random()
     return event
@@ -37,10 +31,7 @@ scored_topic = app.topic(
 
 @app.agent(clickevents_topic)
 async def clickevent(clickevents):
-    #
-    # TODO: Add the `add_score` processor to the incoming clickevents
-    #       See: https://faust.readthedocs.io/en/latest/reference/faust.streams.html?highlight=add_processor#faust.streams.Stream.add_processor
-    #
+
     clickevents.add_processor(add_score)
     async for ce in clickevents:
         await scored_topic.send(key=ce.uri, value=ce)
